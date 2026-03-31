@@ -30,4 +30,15 @@ rank = sum(s < opt_sharpe for s in random_sharpes)
 percentile = rank / n_random * 100
 
 print(f"最適化シャープレシオ: {opt_sharpe:.3f}")
-print(f"ランダムの中
+print(f"ランダムの中央値: {np.median(random_sharpes):.3f}")
+print(f"上位{100 - percentile:.1f}%")
+
+# ヒストグラム
+plt.figure(figsize=(10, 6))
+plt.hist(random_sharpes, bins=50, alpha=0.7, label="ランダム1000通り")
+plt.axvline(opt_sharpe, color="red", linewidth=2, label=f"最適化（{opt_sharpe:.3f}）")
+plt.xlabel("シャープレシオ（検証期間）")
+plt.ylabel("頻度")
+plt.title("最適化 vs ランダム1000通り（検証期間2020〜2026）")
+plt.legend()
+plt.show()
